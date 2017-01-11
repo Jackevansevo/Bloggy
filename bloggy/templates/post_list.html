@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% set active_page = "index" %}
+{% block content %}
+<div class="container-fluid" style="background: #F5F5F5;">
+    <div class="row pt-3">
+        <div class="col-xs-12 col-lg-10">
+            {% for post in posts %}
+                {% include "post.html" %}
+            {% else %}
+            <div>
+                <div class="jumbotron rounded" style="background: #ffffff">
+                    <h1 class="display-3">No Posts Available</h1>
+                    <p class="lead text-danger"> No posts have been found matching the criteria</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="col-xs-12 col-lg-2">
+            <ul class="list-group">
+                <li class="list-group-item active">
+                    <i class="fa fa-tag" aria-hidden="true"></i>&nbsp; Blog Tags
+                </li>
+                <li class="list-group-item justify-content-between">
+                    Cras justo odio
+                    <span class="badge badge-default badge-pill">14</span>
+                </li>
+                <li class="list-group-item justify-content-between">
+                    Dapibus ac facilisis in
+                    <span class="badge badge-default badge-pill">2</span>
+                </li>
+                <li class="list-group-item justify-content-between">
+                    Morbi leo risus
+                    <span class="badge badge-default badge-pill">1</span>
+                </li>
+            </ul>
+            <ul class="list-group pt-3">
+                <li class="list-group-item bg-info text-white">
+                    <i class="fa fa-twitter" aria-hidden="true"></i>&nbsp; Twitter
+                </li>
+                <li class="list-group-item">
+                    <a class="twitter-timeline" href="https://twitter.com/ThisIsJackEvans">Tweets by ThisIsJackEvans</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

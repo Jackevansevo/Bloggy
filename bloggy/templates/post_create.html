@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% set active_page = "write" %}
+{% block content %}
+
+<div class="container pt-3">
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            <label for="titleInput">Title</label>
+            <input type="text" class="form-control" id="titleInput" name="title" placeholder="Enter title">
+        </div>
+
+        <div class="form-group">
+            <label for="tagsInput">Tags</label>
+            <input type="text" class="form-control" id="tagsInput" name="tags" placeholder="Enter tags">
+        </div>
+
+        <div class="form-group">
+            <label for="markdownInput">Post body</label>
+            <textarea class="form-control" style="height: 60vh;" id="markdownInput" rows="10" name="markdown" placeholder="Enter body"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+
+{% endblock %}

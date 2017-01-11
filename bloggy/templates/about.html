@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% set active_page = "about" %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            {% for i in range(1, 4) %}
+            <p>{{ lipsum() }}</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
