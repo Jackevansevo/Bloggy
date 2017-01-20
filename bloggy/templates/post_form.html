@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% set active_page = "post_create" %}
+
+{% block stylesheets %}
+    {{ super() }}
+    <style type="text/css">
+    .container input[type="text"], textarea {
+        font-family: 'Roboto Mono', monospace;
+    }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+<div class="container pt-3">
+    <div class="card card-block">
+        <form method="POST">
+            {{ form.csrf_token }}
+            <div class="form-group">
+                <label for="titleInput"><b>Title</b></label>
+                <input type="text" class="form-control" id="titleInput" name="title" placeholder="Enter title" {% if form.data.title %} value="{{ form.data.title }}" {% endif %}>
+            </div>
+            <div class="form-group">
+                <label for="tagsInput"><b>Tags</b></label>
+                <input type="text" class="form-control" id="tagsInput" name="tags" placeholder="Enter tags" {% if form.data.tags %} value="{{ form.data.tags }}" {% endif %}>
+            </div>
+            <div class="form-group">
+                <label for="markdownInput"><b>Post body</b></label>
+                <div class="btn-toolbar mb-2" role="toolbar" aria-label="Toolbar with button groups" >
+                    <div class="btn-group mr-2" role="group" aria-label="First group">
+                        <button type="button" class="btn btn-secondary" tabindex="-1">
+                            <i class="fa fa-bold" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" class="btn btn-secondary" tabindex="-1">
+                            <i class="fa fa-italic" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" class="btn btn-secondary" tabindex="-1">
+                            <i class="fa fa-header" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <div class="btn-group mr-2" role="group" aria-label="First group">
+                        <button type="button" class="btn btn-secondary" tabindex="-1">
+                            <i class="fa fa-list-ol" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" class="btn btn-secondary" tabindex="-1">
+                            <i class="fa fa-list-ul" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <div class="btn-group mr-2" role="group" aria-label="First group" >
+                        <button type="button" class="btn btn-secondary" tabindex="-1">
+                            <i class="fa fa-code" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" class="btn btn-secondary" tabindex="-1">
+                            <i class="fa fa-quote-left" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <div class="btn-group mr-2" role="group" aria-label="First group">
+                        <button type="button" class="btn btn-secondary" tabindex="-1">
+                            <i class="fa fa-picture-o" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" class="btn btn-secondary" tabindex="-1">
+                            <i class="fa fa-link" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+                <textarea class="form-control" style="height: 50vh;" id="markdownInput" rows="10" name="markdown" placeholder="Enter body">{% if form.data.markdown %}{{ form.data.markdown }}{% endif %}</textarea>
+            </div>
+            <div class="form-group">
+                <label class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="published" value="y" name="published">
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">Publish Immediately</span>
+                </label>
+            </div>
+            <button type="submit" class="btn btn-success mt-2"><i class="fa fa-pencil" aria-hidden="true"></i>&nbsp; Submit</button>
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}

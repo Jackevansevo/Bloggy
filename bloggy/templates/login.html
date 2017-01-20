@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% set active_page = "login" %}
+{% block content %}
+
+<div class="container pt-3">
+    <div class="card card-block p-5">
+        <form method="POST">
+            {{ form.csrf_token }}
+            {% if form.email.errors %}
+                <div class="form-group has-danger">
+                    <label class="form-control-label" for="emailInput"><b>{{ form.email.label }}</b></label>
+                    <input type="text" class="form-control form-control-danger" id="emailInput" name="email" value="{{ form.email.data }}">
+                    {% for error in form.email.errors %}
+                        <div class="form-control-feedback">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="form-group">
+                    <label for="emailInput"><b>Email</b></label>
+                    <input type="email" class="form-control" id="emailInput" name="email" placeholder="Enter email" {% if form.email.data %} value="{{ form.email.data }}" {% endif %}>
+                </div>
+            {% endif %}
+
+            {% if form.password.errors %}
+                <div class="form-group has-danger">
+                    <label class="form-control-label" for="passwordInput"><b>{{ form.password.label }}</b></label>
+                    <input type="password" class="form-control form-control-danger" id="passwordInput" name="password" value="{{ form.password.data }}">
+                    {% for error in form.password.errors %}
+                        <div class="form-control-feedback">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="form-group">
+                    <label for="passwordInput"><b>Password</b></label>
+                    <input type="password" class="form-control" id="passwordInput" name="password" placeholder="Your secret password" {% if form.password.data %} value="{{ form.password.data }}" {% endif %}>
+                </div>
+            {% endif %}
+            <button type="submit" class="btn btn-success"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp; Login</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

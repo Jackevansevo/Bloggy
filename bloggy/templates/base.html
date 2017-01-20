@@ -8,17 +8,23 @@
 
     <title>{% block title %}{% endblock %} - Jack Evans</title>
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-
-    <link rel="stylesheet" href="{{ url_for('static', filename='code.css') }}" >
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}?v=1">
 
+    {% block stylesheets %}
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='code.css') }}" >
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" >
+
+    {% endblock %}
+
   </head>
   <body>
-
       <nav class="navbar navbar-toggleable-md navbar-inverse" style="background: #205081">
           <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
@@ -29,7 +35,7 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav mr-auto">
                   {% set navigation_bar = [
-                      ('posts', 'Posts', 'fa-list'),
+                      ('post_list', 'Posts', 'fa-list'),
                       ('projects', 'Projects', 'fa-code'),
                       ('about', 'About', 'fa-info')
                   ] -%}
@@ -44,11 +50,23 @@
                   {% endfor %}
              </ul>
               <ul class="navbar-nav my-2 my-lg-0 mr-2">
-                  <li class="nav-item">
-                      <a class="nav-link" href="{{ url_for('post_create') }}">
-                          <i class="fa fa-pencil" aria-hidden="true"></i>&nbsp; Write
-                      </a>
-                  </li>
+                  {% if current_user.is_authenticated %}
+                      <li class="nav-item {% if active_page == 'post_create' %} active {% endif %}">
+                          <a class="nav-link" href="{{ url_for('post_create') }}">
+                              <i class="fa fa-pencil" aria-hidden="true"></i>&nbsp; Write
+                          </a>
+                      </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <i class="fa fa-user" aria-hidden="true"></i>&nbsp; {{ current_user.forename }}
+                          </a>
+                          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                              <a class="dropdown-item" href="{{ url_for('logout') }}">
+                                  <i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp; Logout
+                              </a>
+                          </div>
+                      </li>
+                  {% endif %}
               </ul>
               <form class="form-inline my-2 my-lg-0">
                   <input class="form-control mr-sm-2 text-white" type="text" placeholder="Search Posts..." name="title" style="background: #2e3D54">
@@ -56,14 +74,27 @@
               </form>
           </div>
       </nav>
-
       {% block content %}
       {% endblock content %}
+      {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+              {% for category, message in messages %}
+              <div class="fixed-bottom align-bottom alert alert-{{ category }} mb-0" role="alert">
+                  <strong class="mr-2">{{ category|capitalize }}!</strong> {{ message }}
+                  </div>
+              {% endfor %}
+          {% endif %}
+      {% endwith %}
 
-    <!-- jQuery first, then Tether, then Bootstrap JS. -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js" integrity="sha384-XTs3FgkjiBgo8qjEjBk0tGmf3wPrWtA6coPfQDfFEY8AnYJwjalXCiosYRBIBZX8" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-    <script src="https://use.fontawesome.com/6b61cfd894.js"></script>
+      {% block scripts %}
+          <!-- jQuery first, then Tether, then Bootstrap JS. -->
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js" integrity="sha384-XTs3FgkjiBgo8qjEjBk0tGmf3wPrWtA6coPfQDfFEY8AnYJwjalXCiosYRBIBZX8" crossorigin="anonymous"></script>
+          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.4.1/velocity.min.js"></script>
+          <script src="{{ url_for('static', filename='alerts.js') }}"></script>
+          <script async src="https://use.fontawesome.com/6b61cfd894.js"></script>
+      {% endblock %}
+
   </body>
 </html>

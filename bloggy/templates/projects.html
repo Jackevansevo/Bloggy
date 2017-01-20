@@ -1,23 +1,44 @@
 {% extends "base.html" %}
 {% set active_page = "projects" %}
+
 {% block content %}
-<div class="container-fluid">
+<div class="container-fluid pt-2">
     <div class="row">
-        {% for i in range(1, 10) %}
+        {% for i in range(1, 3) %}
             <div class="col-sm-12 col-md-6 col-lg-3 py-2">
                 <div class="card">
                     <img class="card-img-top w-100" src="http://placehold.it/450x300" alt="Card image cap">
                     <div class="card-block">
                         <h4 class="card-title">Card title</h4>
                         <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <div class="float-left">
+                            <a href="#" class="text-primary unstyled"><i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;</a>
+                            <a href="#" class="text-danger trash"><i class="fa fa-trash" aria-hidden="true"></i>&nbsp;</a>
+                        </div>
+
+
                         <div class="float-right">
-                            <a href="#" class="btn btn-danger"><i class="fa fa-github" aria-hidden="true"></i>&nbsp;</a>
-                            <a href="#" class="btn btn-success"><i class="fa fa-globe" aria-hidden="true"></i>&nbsp;</a>
+                            <a href="#" class="text-muted unstyled"><i class="fa fa-github" aria-hidden="true"></i>&nbsp;</a>
+                            <a href="#" class="text-success unstyled"><i class="fa fa-globe" aria-hidden="true"></i>&nbsp;</a>
                         </div>
                     </div>
                 </div>
             </div>
         {% endfor %}
+        {% if current_user.is_authenticated %}
+            <div class="col-sm-12 col-md-6 col-lg-3 py-2">
+                <a class="unstyled" href="#" data-toggle="modal" data-target="#projectCreateModal">
+                    <div class="card h-100 py-5">
+                        <div class="card-block text-center py-5 my-3">
+                            <i class="fa fa-plus-circle text-success fa-4x" aria-hidden="true"></i>
+                            <h4 class="card-title py-4 font-weight-bold">Add Project</h4>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
+
+{% include "project_create_modal.html" %}

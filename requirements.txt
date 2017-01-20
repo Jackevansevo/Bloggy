@@ -1,0 +1,6 @@
+Flask
+Flask-SQLAlchemy
+Flask-WTF
+pygments
+markdown2
+awesome-slugify

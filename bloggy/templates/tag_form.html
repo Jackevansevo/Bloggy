@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% set active_page = "post_create" %}
+
+{% block stylesheets %}
+    {{ super() }}
+    <style type="text/css">
+    .container input[type="text"], textarea {
+        font-family: 'Roboto Mono', monospace;
+    }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+<div class="container pt-3">
+    <div class="card card-block">
+        <form method="POST">
+            {{ form.csrf_token }}
+            <div class="form-group">
+                <label for="nameInput"><b>Name</b></label>
+                <input type="text" class="form-control" id="nameInput" name="name" placeholder="Enter name" {% if form.data.name %} value="{{ form.data.name }}" {% endif %}>
+            </div>
+
+            <div class="form-group">
+                <label for="nameInput"><b>Icon</b></label>
+                <input type="text" class="form-control" id="nameInput" name="icon" placeholder="Enter icon name" {% if form.data.icon %} value="{{ form.data.icon }}" {% endif %}>
+            </div>
+
+            <div class="form-group">
+                <label for="nameInput"><b>Colour</b></label>
+                <input type="text" class="form-control" id="nameInput" name="colour" placeholder="Enter colour code" {% if form.data.colour %} value="{{ form.data.colour }}" {% endif %}>
+            </div>
+            <button type="submit" class="btn btn-success mt-2"><i class="fa fa-pencil" aria-hidden="true"></i>&nbsp; Submit</button>
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}

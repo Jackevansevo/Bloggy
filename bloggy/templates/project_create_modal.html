@@ -1,0 +1,37 @@
+<!-- Post Delete Modal -->
+<div class="modal fade" id="projectCreateModal" tabindex="-1" role="dialog" aria-labelledby="projectCreateModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-success rounded-top text-white">
+                <h5 class="modal-title" id="projectCreateModalLabel"><i class="fa fa-pencil" aria-hidden="true"></i>&nbsp; Create Project</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {{ form.csrf_token }}
+                <div class="form-group">
+                    <label for="nameInput"><b>Name</b></label>
+                    <input type="text" class="form-control" id="nameInput" name="title" placeholder="Enter project name" {% if form.data.name %} value="{{ form.data.name }}" {% endif %}>
+                </div>
+                <div class="form-group">
+                    <label for="descriptionInput"><b>Description</b></label>
+                    <textarea class="form-control" style="height: 30vh;" id="descriptionInput" rows="10" name="markdown" placeholder="Enter project description">{% if form.data.description %}{{ form.data.description }}{% endif %}</textarea>
+                </div>
+                <div class="form-group">
+                    <div><label for="file"><b>File</b></label></div>
+                    <div>
+                        <label class="custom-file">
+                            <input type="file" id="file" class="custom-file-input form-control">
+                            <span class="custom-file-control"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-undo" aria-hidden="true"></i> Cancel</button>
+                <button type="submit" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Create</button>
+            </div>
+        </div>
+    </div>
+</div>

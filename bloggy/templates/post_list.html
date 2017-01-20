@@ -1,7 +1,7 @@
 {% extends "base.html" %}
-{% set active_page = "index" %}
+{% set active_page = "post_list" %}
 {% block content %}
-<div class="container-fluid" style="background: #F5F5F5;">
+<div class="container-fluid">
     <div class="row pt-3">
         <div class="col-xs-12 col-lg-10">
             {% for post in posts %}
@@ -20,28 +20,37 @@
                 <li class="list-group-item active">
                     <i class="fa fa-tag" aria-hidden="true"></i>&nbsp; Blog Tags
                 </li>
-                <li class="list-group-item justify-content-between">
-                    Cras justo odio
-                    <span class="badge badge-default badge-pill">14</span>
-                </li>
-                <li class="list-group-item justify-content-between">
-                    Dapibus ac facilisis in
-                    <span class="badge badge-default badge-pill">2</span>
-                </li>
-                <li class="list-group-item justify-content-between">
-                    Morbi leo risus
-                    <span class="badge badge-default badge-pill">1</span>
-                </li>
+                {% if tags %}
+                    {% for tag in tags %}
+                    <a href="{{ url_for('tag_detail', tag=tag.name) }}" class="list-group-item list-group-item-action justify-content-between">
+                        <span class="badge badge-pill badge-default" style="background: {{ tag.colour }}">
+                            <i class="fa fa-{{ tag.icon }} px-1" aria-hidden="true"></i>
+                            {{ tag.name }}
+                        </span>
+                        <span class="badge badge-default badge-pill">{{ tag.posts.count() }}</span>
+                    </a>
+                    {% endfor %}
+                {% else %}
+                    <li class="list-group-item font-weight-bold text-danger">No tags available</li>
+                {% endif %}
             </ul>
             <ul class="list-group pt-3">
                 <li class="list-group-item bg-info text-white">
                     <i class="fa fa-twitter" aria-hidden="true"></i>&nbsp; Twitter
                 </li>
                 <li class="list-group-item">
-                    <a class="twitter-timeline" href="https://twitter.com/ThisIsJackEvans">Tweets by ThisIsJackEvans</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+                    <a class="twitter-timeline" data-chrome="noheader nofooter" href="https://twitter.com/ThisIsJackEvans">Tweets by ThisIsJackEvans</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
                 </li>
             </ul>
         </div>
     </div>
 </div>
+
+{% include "post_delete_modal.html" %}
+
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='post-delete.js') }}"></script>
 {% endblock %}

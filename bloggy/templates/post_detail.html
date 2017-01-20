@@ -8,3 +8,10 @@
 </div>
 
 {% endblock %}
+
+{% include "post_delete_modal.html" %}
+
+{% block scripts %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='post-delete.js') }}"></script>
+{% endblock %}
